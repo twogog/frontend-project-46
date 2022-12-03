@@ -5,8 +5,9 @@ import fs from 'fs';
 import path from 'path';
 import { cwd } from 'node:process';
 
-const pathchecker = (filepath) => (path.isAbsolute(filepath) ? filepath : cwd());
-const readFileMakeObject = (filepath) => JSON.parse(fs.readFileSync(path.resolve(pathchecker, filepath), 'utf-8'));
+const absolutechecker = (filepath) => (path.isAbsolute(filepath)
+  ? filepath : path.resolve(cwd(), filepath));
+const readFileMakeObject = (filepath) => JSON.parse(fs.readFileSync(absolutechecker(filepath), 'utf-8'));
 
 const genDiff = (path1, path2) => {
   const firstfile = readFileMakeObject(path1);
