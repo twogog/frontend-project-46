@@ -1,5 +1,5 @@
 # Name of workflow
-name: Gendiff
+name: tests ans linter
 
 # Trigger the workflow on push
 on:
@@ -34,7 +34,6 @@ jobs:
           cache: 'npm'
       - run: make install
       - run: make lint
-      - run: pwd
       - run: make test
       # - name: Test & publish code coverage
       #   # Publish code coverage on Code Climate
