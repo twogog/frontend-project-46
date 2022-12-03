@@ -18,5 +18,5 @@ test('genDiff.json', () => {
   + timeout: 20
   + verbose: true
 }`;
-  expect(genDiff(file1, file2)).toEqual(expected);
+  expect(genDiff('file1.json', 'file2.json')).toEqual(expected);
 });
