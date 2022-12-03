@@ -5,9 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { cwd } from 'node:process';
 
-const readFileMakeObject = (filepath) => {
-  return JSON.parse(fs.readFileSync(path.resolve(cwd(), filepath), 'utf-8'));
-};
+const readFileMakeObject = (filepath) => JSON.parse(fs.readFileSync(path.resolve(cwd(), filepath), 'utf-8'));
 
 const genDiff = (path1, path2) => {
   const firstfile = readFileMakeObject(path1);
@@ -17,27 +15,26 @@ const genDiff = (path1, path2) => {
   const allkeysfromtwo = [...Object.keys(sortedfile1), ...Object.keys(sortedfile2)];
   const allvaluesfromtwo = [...Object.values(sortedfile1), ...Object.values(sortedfile2)];
   const lengthoffirstfile = Object.keys(firstfile).length;
-  
-  const result =  allkeysfromtwo.reduce((acc, key, index) => {
+
+  const result = allkeysfromtwo.reduce((acc, key, index) => {
     if (allkeysfromtwo.indexOf(key) === allkeysfromtwo.lastIndexOf(key)) {
       if (index < lengthoffirstfile) {
-        return [ ...acc, [`  - ${key}`, firstfile[key]] ];
-      } else {
-        return [ ...acc, [`  + ${key}`, secondfile[key]] ];
+        return [...acc, [`  - ${key}`, firstfile[key]]];
       }
-    } else {
-        const samevalue = allvaluesfromtwo[allkeysfromtwo.indexOf(key)] === allvaluesfromtwo[allkeysfromtwo.lastIndexOf(key)];
-        if (samevalue  && !acc.includes(key)) {
-          return [ ...acc, [`    ${key}`, firstfile[key]] ];
-        } else if (!samevalue) {
-          return [ ...acc, [`  - ${key}`, firstfile[key]], [`  + ${key}`, secondfile[key]] ];
-        }
+      return [...acc, [`  + ${key}`, secondfile[key]]];
+    }
+    const samevalue = allvaluesfromtwo[allkeysfromtwo.indexOf(key)]
+     === allvaluesfromtwo[allkeysfromtwo.lastIndexOf(key)];
+    if (samevalue && !acc.includes(key)) {
+      return [...acc, [`    ${key}`, firstfile[key]]];
+    } if (!samevalue) {
+      return [...acc, [`  - ${key}`, firstfile[key]], [`  + ${key}`, secondfile[key]]];
     }
     return acc;
   }, []);
 
-  const removedublicates =  Object.entries(_.fromPairs(result));
-  const finalstring = removedublicates.map(join => join.join(': ')).join('\n');
+  const removedublicates = Object.entries(_.fromPairs(result));
+  const finalstring = removedublicates.map((join) => join.join(': ')).join('\n');
   return `{\n${finalstring}\n}`;
 };
 
