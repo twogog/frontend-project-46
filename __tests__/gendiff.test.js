@@ -8,6 +8,8 @@ const __dirname = path.dirname(__filename);
 
 test('genDiff.json', () => {
   const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+  const file1 = getFixturePath('file1.json');
+  const file2 = getFixturePath('file2.json');
   const expected = `{
   - follow: false
     host: hexlet.io
@@ -16,5 +18,5 @@ test('genDiff.json', () => {
   + timeout: 20
   + verbose: true
 }`;
-  expect(genDiff(getFixturePath('file1.json'), getFixturePath('file2.json'))).toEqual(expected);
+  expect(genDiff(file1, file2)).toEqual(expected);
 });
