@@ -8,9 +8,6 @@ const __dirname = path.dirname(__filename);
 
 test('genDiff.json', () => {
   const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-  console.log(__filename);
-  console.log(__dirname);
-  console.log(getFixturePath('file1.json'));
   const expected = `{
   - follow: false
     host: hexlet.io
