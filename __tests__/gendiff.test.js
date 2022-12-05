@@ -1,4 +1,5 @@
 import { test, expect } from '@jest/globals';
+import { readFileSync } from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import genDiff from '../src/index.js';
@@ -9,7 +10,7 @@ const __dirname = path.dirname(__filename);
 test('genDiff', () => {
   const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
   const files = [['file1.json', 'file2.json'], ['file1.yaml', 'file2.yaml']];
-  const expected = getFixturePath('expected.txt');
+  const expected = readFileSync(getFixturePath('expected.txt'), 'utf-8');
 
   files.forEach((twofiles) => {
     const [file1, file2] = twofiles;
