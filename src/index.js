@@ -1,21 +1,9 @@
-/* path.resolve(), process.cwd(): работа с абсолютным и относительными
-путями */
 import _ from 'lodash';
-import fs from 'fs';
-import path from 'path';
-import { cwd } from 'node:process';
-
-const absolutepath = (filepath) => path.resolve(cwd(), filepath);
-
-const readFileMakeObject = (filepath) => {
-  const getpath = absolutepath(filepath);
-  const readfile = fs.readFileSync(getpath, 'utf-8');
-  return JSON.parse(readfile);
-};
+import parse from './parsers.js';
 
 const genDiff = (path1, path2) => {
-  const firstfile = readFileMakeObject(path1);
-  const secondfile = readFileMakeObject(path2);
+  const firstfile = parse(path1);
+  const secondfile = parse(path2);
   const sortedfile1 = _.fromPairs(_.sortBy(Object.entries(firstfile)));
   const sortedfile2 = _.fromPairs(_.sortBy(Object.entries(secondfile)));
   const allkeysfromtwo = [...Object.keys(sortedfile1), ...Object.keys(sortedfile2)];

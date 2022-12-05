@@ -6,10 +6,9 @@ import genDiff from '../src/index.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-test('genDiff.json', () => {
+test('genDiff', () => {
   const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-  const file1 = getFixturePath('file1.json');
-  const file2 = getFixturePath('file2.json');
+  const files = [['file1.json', 'file2.json'], ['file1.yaml', 'file2.yaml']];
   const expected = `{
   - follow: false
     host: hexlet.io
@@ -18,5 +17,11 @@ test('genDiff.json', () => {
   + timeout: 20
   + verbose: true
 }`;
-  expect(genDiff(file1, file2)).toEqual(expected);
+
+  files.forEach((twofiles) => {
+    const [file1, file2] = twofiles;
+    const filepath1 = getFixturePath(file1);
+    const filepath2 = getFixturePath(file2);
+    expect(genDiff(filepath1, filepath2)).toEqual(expected);
+  });
 });
