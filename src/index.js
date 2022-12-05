@@ -4,6 +4,7 @@ import parse from './parsers.js';
 const genDiff = (path1, path2) => {
   const firstfile = parse(path1);
   const secondfile = parse(path2);
+
   const sortedfile1 = _.fromPairs(_.sortBy(Object.entries(firstfile)));
   const sortedfile2 = _.fromPairs(_.sortBy(Object.entries(secondfile)));
   const allkeysfromtwo = [...Object.keys(sortedfile1), ...Object.keys(sortedfile2)];
