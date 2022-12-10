@@ -20,21 +20,23 @@ const genDiff = (path1, path2) => {
     const obj2 = node2;
     const allkeys = _.sortBy(_.union(Object.keys(obj1), Object.keys(obj2)));
     allkeys.map((key) => {
-      
       if (parents.length > 0) {
-        const firsttry = _.get(firstfile, parents);
-        const secondtry = _.get(secondfile, parents);
-        if (firsttry !== undefined) {
-          if (!Object.keys(firsttry).includes(key) && !Object.keys(secondtry).includes(key)) {
+        const firsttry = [_.get(firstfile, parents), _.get(secondfile, parents)];
+        if (firsttry[0] !== undefined || firsttry[1] !== undefined) {
+          if (!Object.keys(firsttry[0]).includes(key) && !Object.keys(firsttry[1]).includes(key)) {
             if (parents.split('.').length > 1) {
               const temporare = parents.split('.');
               temporare.pop();
               parents = temporare.join('.');
-            } else parents = '';
+            } else {
+              parents = '';
+            }
           }
         }
-        if (secondtry !== undefined) {
-          if (!Object.keys(secondtry).includes(key) && !Object.keys(firsttry).includes(key)) {
+
+        const secondtry = [_.get(firstfile, parents), _.get(secondfile, parents)];
+        if (secondtry[0] !== undefined || secondtry[1] !== undefined) {
+          if (!Object.keys(secondtry[0]).includes(key) && !Object.keys(secondtry[1]).includes(key)) {
             if (parents.split('.').length > 1) {
               const temporare = parents.split('.');
               temporare.pop();
@@ -43,6 +45,7 @@ const genDiff = (path1, path2) => {
           }
         }
       }
+
       if (Object.hasOwn(obj1, key) && Object.hasOwn(obj2, key)) {
         if (!_.isObject(obj1[key])) {
           if (obj1[key] === obj2[key]) {
