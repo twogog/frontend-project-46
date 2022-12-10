@@ -5,6 +5,7 @@ const stylish = (asttree) => {
   // tylishtree.replaceAll('""', '');
   const stylishtree = {};
   asttree.map((element) => {
+    console.log(stylishtree)
     let intend = element.parent.split('.').length;
     (element.parent).length === 0 ? '' : intend += 1;
     let value = '';
@@ -32,8 +33,8 @@ const stylish = (asttree) => {
             firstname = `- ${element.name}`;
             secondname = `+ ${element.name}`;
           } else {
-            firstname = `${element.parent}.${firstname}`;
-            secondname = `${element.parent}.${secondname}`;
+            firstname = `${element.parent}.- ${element.name}`;
+            secondname = `${element.parent}.+ ${element.name}`;
           }
           _.set(stylishtree, firstname, element.from);
           _.set(stylishtree, secondname, element.to);
@@ -41,14 +42,14 @@ const stylish = (asttree) => {
         default: return;
       }
     }
-    if (element.value !== 'updated') {
+    if (element.status !== 'updated') {
       if (element.parent === '') {
         name = `${prefix}${element.name}`;
       } else name = `${element.parent}.${prefix}${element.name}`;
       _.set(stylishtree, name, value);
     }
   });
-  return stylishtree;
+  console.log(stylishtree)
 };
 
 export default stylish;
