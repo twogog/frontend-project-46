@@ -54,10 +54,12 @@ const genDiff = (path1, path2) => {
             tree = [...tree, { name: key, parent: parents, value: obj1[key], status: 'updated',
               from: obj1[key], to: obj2[key] }];
           }
-        } else {
-          tree = [...tree, { name: key, parent: parents, value: obj1[key], status: 'unchanged' }];
-        }
+        } else if (!_.isObject(obj2[key]) && _.isObject(obj1[key])) {
+          tree = [...tree, { name: key, parent: parents, value: obj1[key], status: 'updated',
+            from: obj1[key], to: obj2[key] }];
+        } else tree = [...tree, { name: key, parent: parents, value: obj1[key], status: 'unchanged' }];
       }
+
       if (!Object.hasOwn(obj1, key)) {
         tree = [...tree, { name: key, parent: parents, value: obj2[key], status: 'added' }];
       }
