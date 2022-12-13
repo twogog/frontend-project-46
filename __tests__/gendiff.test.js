@@ -20,10 +20,10 @@ test('genDiff', () => {
   });
 });
 
-// test('trying to understand', () => {
-//   const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
-//   const filepath1 = getFixturePath('tests1.json');
-//   const filepath2 = getFixturePath('tests2.json');
-//   const expected = readFileSync(getFixturePath('test.txt'), 'utf-8');
-//   expect(genDiff(filepath1, filepath2)).toEqual(expected);
-// });
+test('trying to understand', () => {
+  const getFixturePath = (filename) => path.join(__dirname, '..', '__fixtures__', filename);
+  const filepath1 = getFixturePath('tests1.json');
+  const filepath2 = getFixturePath('tests2.json');
+  const expected = readFileSync(getFixturePath('test.txt'), 'utf-8');
+  expect(genDiff(filepath1, filepath2)).toEqual(expected);
+});

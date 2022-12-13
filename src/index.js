@@ -2,7 +2,7 @@ import _ from 'lodash';
 import parse from './parsers.js';
 import stylish from './stylish.js';
 
-const genDiff = (path1, path2) => {
+const genDiff = (path1, path2, format = 'stylish') => {
   const firstfile = parse(path1);
   const secondfile = parse(path2);
   let tree = [];
@@ -73,8 +73,7 @@ const genDiff = (path1, path2) => {
     });
   };
   buildTree(firstfile, secondfile);
-
-  return stylish(tree);
+  return format === 'stylish' ? stylish(tree) : 'shit fuck';
 };
 
 export default genDiff;

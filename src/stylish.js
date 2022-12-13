@@ -1,12 +1,8 @@
 import _ from 'lodash';
 
 const stylish = (asttree) => {
-  // _.repeat()
-  // tylishtree.replaceAll('""', '');
   const stylishtree = {};
   asttree.map((element) => {
-    let intend = element.parent.split('.').length;
-    (element.parent).length === 0 ? '' : intend += 1;
     let value = '';
     let name = '';
     let prefix = '';
@@ -69,7 +65,13 @@ const stylish = (asttree) => {
       _.set(stylishtree, name, value);
     }
   });
-  console.log(stylishtree);
+
+  const stylishstring = JSON.stringify(stylishtree, null, 4)
+    .replaceAll('"', '')
+    .replaceAll(',', '')
+    .replaceAll('  +', '+')
+    .replaceAll('  -', '-');
+  return stylishstring;
 };
 
 export default stylish;
