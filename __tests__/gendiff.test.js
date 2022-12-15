@@ -12,6 +12,7 @@ test('genDiff', () => {
   const files = [['file1.json', 'file2.json'], ['file1.yaml', 'file2.yaml']];
   const stylish = readFileSync(getFixturePath('stylish.txt'), 'utf-8');
   const plain = readFileSync(getFixturePath('plain.txt'), 'utf-8');
+  const json = readFileSync(getFixturePath('json.txt'), 'utf-8');
 
   files.forEach((twofiles) => {
     const [file1, file2] = twofiles;
@@ -19,5 +20,6 @@ test('genDiff', () => {
     const filepath2 = getFixturePath(file2);
     expect(genDiff(filepath1, filepath2)).toEqual(stylish);
     expect(genDiff(filepath1, filepath2, 'plain')).toEqual(plain);
+    expect(genDiff(filepath1, filepath2, 'json')).toEqual(json);
   });
 });
