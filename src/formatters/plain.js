@@ -9,7 +9,7 @@ const whichValue = (value) => {
 const plain = (astTree) => {
   const plainformat = astTree.filter((node) => node.status !== 'unchanged')
     .map((node) => {
-      const parent = node.parent === '' ? node.name : `${node.parent}.${node.name}`;
+      const parent = node.parent.length === 0 ? node.name : `${node.parent.join('.')}.${node.name}`;
       if (node.status === 'added') {
         return `Property '${parent}' was added with value: ${whichValue(node.value)}`;
       } if (node.status === 'removed') {
